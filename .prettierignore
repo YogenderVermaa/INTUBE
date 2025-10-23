@@ -1,8 +1,20 @@
 /.vscode
 /node_modules
 ./dist
+build
+coverage
+.cache
+out
+
+
+
 
 
 *.env
 .env
 .env.*
+
+package-lock.json
+package.json
+yarn.lock
+pnpm-lock.yaml
