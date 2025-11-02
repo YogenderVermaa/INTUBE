@@ -8,14 +8,16 @@ const toggleLike = async (req, res, fieldName, fieldValue, entityName) => {
   if (!fieldValue || !isValidObjectId(fieldValue)) {
     throw new ApiError(400, `Invalid ${entityName} ID`);
   }
-  
+
   const existing = await Like.findOneAndDelete({
-  [fieldName]: fieldValue,
-  likedBy: req.user?._id,
-});
-if (existing) {
-  return res.status(200).json(new ApiResponse(200, null, `Unliked ${entityName} successfully`));
-}
+    [fieldName]: fieldValue,
+    likedBy: req.user?._id,
+  });
+  if (existing) {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, null, `Unliked ${entityName} successfully`));
+  }
 
   const newLike = await Like.create({
     [fieldName]: fieldValue,
@@ -40,7 +42,10 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
 });
 
 const getLikedVideos = asyncHandler(async (req, res) => {
-  const likedVideos = await Like.find({ likedBy: req.user?._id, video: { $exists: true } })
+  const likedVideos = await Like.find({
+    likedBy: req.user?._id,
+    video: { $exists: true },
+  })
     .populate("video", "videoFile title description owner")
     .sort({ createdAt: -1 });
 
@@ -50,11 +55,9 @@ const getLikedVideos = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, likedVideos, "Liked videos fetched successfully"));
+    .json(
+      new ApiResponse(200, likedVideos, "Liked videos fetched successfully")
+    );
 });
 
-export { toggleVideoLike,
-         toggleCommentLike,
-         toggleTweetLike,
-        getLikedVideos 
-      };
+export { toggleVideoLike, toggleCommentLike, toggleTweetLike, getLikedVideos };

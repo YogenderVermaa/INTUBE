@@ -17,7 +17,10 @@ const createPlaylist = asyncHandler(async (req, res) => {
   });
 
   if (playListExist) {
-    throw new ApiError(400, "Playlist with same name already exists, change the name");
+    throw new ApiError(
+      400,
+      "Playlist with same name already exists, change the name"
+    );
   }
 
   const newPlaylist = await Playlist.create({
@@ -52,7 +55,9 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, userPlaylists, "Playlists fetched successfully"));
+    .json(
+      new ApiResponse(200, userPlaylists, "Playlists fetched successfully")
+    );
 });
 
 const getPlaylistById = asyncHandler(async (req, res) => {
@@ -62,7 +67,9 @@ const getPlaylistById = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid playlist ID");
   }
 
-  const playlist = await Playlist.findById(playlistId).select("name description videos");
+  const playlist = await Playlist.findById(playlistId).select(
+    "name description videos"
+  );
 
   if (!playlist) {
     throw new ApiError(404, "Playlist not found");
@@ -76,7 +83,7 @@ const getPlaylistById = asyncHandler(async (req, res) => {
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
   const { playlistId, videoId } = req.params;
 
-  if (![playlistId, videoId].every(id => isValidObjectId(id))) {
+  if (![playlistId, videoId].every((id) => isValidObjectId(id))) {
     throw new ApiError(400, "Invalid playlist or video ID");
   }
 
@@ -95,13 +102,15 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, playlist, "Video added to playlist successfully"));
+    .json(
+      new ApiResponse(200, playlist, "Video added to playlist successfully")
+    );
 });
 
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
   const { playlistId, videoId } = req.params;
 
-  if (![playlistId, videoId].every(id => isValidObjectId(id))) {
+  if (![playlistId, videoId].every((id) => isValidObjectId(id))) {
     throw new ApiError(400, "Invalid playlist or video ID");
   }
 
@@ -118,7 +127,9 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, playlist, "Video removed from playlist successfully"));
+    .json(
+      new ApiResponse(200, playlist, "Video removed from playlist successfully")
+    );
 });
 
 const deletePlaylist = asyncHandler(async (req, res) => {
