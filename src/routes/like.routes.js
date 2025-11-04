@@ -8,11 +8,13 @@ import {
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
-router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
 
-router.route("/toggle/v/:videoId").post(toggleVideoLike);
-router.route("/toggle/c/:commentId").post(toggleCommentLike);
-router.route("/toggle/t/:tweetId").post(toggleTweetLike);
-router.route("/videos").get(getLikedVideos);
+router.use(verifyJWT);
+
+router.post("/videos/:videoId/like", toggleVideoLike);
+router.post("/comments/:commentId/like", toggleCommentLike);
+router.post("/tweets/:tweetId/like", toggleTweetLike);
+
+router.get("/videos", getLikedVideos);
 
 export default router;
