@@ -33,6 +33,8 @@ router.route("/register").post(
   registerUser
 );
 
+router.route("/upload").post(upload.single("image"))
+
 router.route("/login").post(loginUser);
 router.route("/refreshToken").post(refreshAccessToken);
 

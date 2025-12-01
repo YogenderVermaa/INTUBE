@@ -3,7 +3,7 @@ import { verifyJWT } from "../middleware/auth.middleware.js";
 import {
   toggleSubscription,
   getUserChannelSubscribers,
-  getSubscribedChannels
+  getSubscribedChannels,
 } from "../controller/subscription.controller.js";
 
 const router = Router();
